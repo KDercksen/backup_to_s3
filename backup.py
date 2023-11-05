@@ -58,6 +58,11 @@ if __name__ == "__main__":
     p.add_argument("path", type=Path, help="path to backup")
     p.add_argument("--dryrun", action="store_true", help="dry run")
     p.add_argument("--checksum-content", action="store_true", help="checksum content")
+    p.add_argument(
+        "--upload-checksum-only",
+        action="store_true",
+        help="upload checksum only (WARNING: dangerous)",
+    )
     p.add_argument("--bucket", help="bucket name", required=True)
     p.add_argument("--profile", help="aws profile name")
     p.add_argument("--storage-class", help="aws storage class", default="STANDARD")
@@ -81,11 +86,12 @@ if __name__ == "__main__":
                 tqdm.write(f"{item.name} changed, uploading...")
             if not args.dryrun:
                 tarball = create_tarball(get_children(item))
-                bucket.upload_fileobj(
-                    tarball,
-                    get_archive_name(item),
-                    ExtraArgs={"StorageClass": args.storage_class},
-                )
+                if not args.upload_checksum_only:
+                    bucket.upload_fileobj(
+                        tarball,
+                        get_archive_name(item),
+                        ExtraArgs={"StorageClass": args.storage_class},
+                    )
                 bucket.put_object(Body=checksum, Key=get_hashfile_name(item))
         else:
             if args.verbose:

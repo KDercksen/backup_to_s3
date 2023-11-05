@@ -30,12 +30,13 @@ python backup.py /path/to/dir --bucket my-bucket --profile my-aws-profile --stor
 
 Arguments:
 
-| Argument             | Description                                                                                              |
-| -------------------- | -------------------------------------------------------------------------------------------------------- |
-| `path`               | Path to the directory to backup                                                                          |
-| `--bucket`           | Name of the S3 bucket to upload to                                                                       |
-| `--profile`          | AWS profile to use (optional, will use `default` when not specified)                                     |
-| `--storage-class`    | Storage class to use (optional, defaults to STANDARD)                                                    |
-| `--verbose`          | Print verbose output (optional)                                                                          |
-| `--dryrun`           | Do not upload anything, just print what would be uploaded (optional)                                     |
-| `--checksum-content` | Use filename plus file content to calculate checksum. If not specified, only filename is used (optional) |
+| Argument                 | Description                                                                                                                                                         |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `path`                   | Path to the directory to backup                                                                                                                                     |
+| `--bucket`               | Name of the S3 bucket to upload to                                                                                                                                  |
+| `--profile`              | AWS profile to use (optional, will use `default` when not specified)                                                                                                |
+| `--storage-class`        | Storage class to use (optional, defaults to STANDARD)                                                                                                               |
+| `--verbose`              | Print verbose output (optional)                                                                                                                                     |
+| `--dryrun`               | Do not upload anything, just print what would be uploaded (optional)                                                                                                |
+| `--checksum-content`     | Use filename plus file content to calculate checksum. If not specified, only filename is used (optional)                                                            |
+| `--upload-checksum-only` | Only upload checksum files, do not upload archives (optional). WARNING: this may compromise understanding of data integrity, only use if you know what you're doing |
