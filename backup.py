@@ -8,6 +8,7 @@ import tarfile
 from pathlib import Path
 
 import boto3
+from botocore.exceptions import ClientError, TokenRetrievalError
 from tqdm import tqdm
 
 
@@ -41,6 +42,9 @@ def download_hash(bucket, key):
         bucket.download_fileobj(key, outfile)
         outfile.seek(0)
         return outfile.read().decode()
+    except TokenRetrievalError:
+        print("Token retrieval error, please refresh your session credentials...")
+        exit()
     except Exception:
         return None
 
